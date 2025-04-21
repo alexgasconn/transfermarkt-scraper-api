@@ -13,3 +13,4 @@ class Player(Base):
     position = Column(String)
     market_value = Column(String)
     market_value_eur = Column(Integer)
+    club = Column(String)
