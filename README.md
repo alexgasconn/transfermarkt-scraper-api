@@ -1,6 +1,4 @@
-Perfecto, aquí tienes el `README.md` completo en **una sola sección Markdown**, con todos los títulos consistentes y el formato homogéneo:
 
-```markdown
 # Transfermarkt Scraper API
 
 A Python project to scrape football player data from [Transfermarkt](https://www.transfermarkt.com/), store it in a local SQLite database, and expose the data through a FastAPI REST API.
@@ -81,4 +79,3 @@ to explore the interactive API via Swagger UI.
 ## 📄 License
 
 MIT
-```
