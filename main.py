@@ -27,4 +27,4 @@ for club_name, club_url in clubs:
 
 session.commit()
 session.close()
-print("✅ Todos los jugadores de la liga guardados.")
+print("✅ Todos los jugadores de la liga guardados!")
