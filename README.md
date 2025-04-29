@@ -6,7 +6,7 @@ A Python project to scrape football player data from [Transfermarkt](https://www
 ## ⚽ Features
 
 - Scrapes player data (name, age, nationality, position, market value) for all Eredivisie clubs  
-- Converts market values (e.g., `€1.20m`, `€500k`) to numeric format  
+- Converts market values (e.g., €1.20m, €500k) to numeric format  
 - Stores data in SQLite using SQLAlchemy ORM  
 - Exposes a `/players` API endpoint with FastAPI  
 - Clean structure ready for extension, testing and deployment  
