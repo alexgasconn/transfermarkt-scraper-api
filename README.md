@@ -72,9 +72,10 @@ to explore the interactive API via Swagger UI.
 
 - Add filters by club, position, nationality  
 - Add top 10 by market value endpoint  
-- Dockerize the full pipeline  
+- Dockerize the full pipeline   (DOING NOW)
 - Add CI with GitHub Actions  
 - Optional: deploy to cloud with Terraform / Ansible  
+
 
 ## 📄 License
 
