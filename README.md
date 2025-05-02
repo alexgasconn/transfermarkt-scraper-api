@@ -134,6 +134,5 @@ Filters supported in /players: name, position, nationality, club, league, age, a
 
 - Ready to run anywhere with docker compose up
 
-
-📄 License
+## 📄 License
 MIT License
