@@ -44,42 +44,45 @@ git clone https://github.com/alexgasconn/transfermarkt-scraper-api.git
 cd transfermarkt-scraper-api
 
 2. **Build the services:**
+
 docker compose build
 
 
 3. **Launch the app:**
+
 docker compose up
 
 4. **Visit in browser:**
+
 API: http://localhost:8000/docs
 Dashboard: http://localhost:8501
 
 5. **Stop everything:**
+
 docker compose down
 
-🌐 REST API Endpoints
-Endpoint	Description
-/players	Returns filtered players with pagination
-/players/export	Downloads filtered player list as CSV
-/leagues	Lists all scraped leagues
-/clubs	Lists clubs (optionally filtered by league)
-/top10	Top 10 players by market value
+## 🌐 REST API Endpoints
+| Endpoint          | Description                                 |
+| ----------------- | ------------------------------------------- |
+| `/players`        | Returns filtered players with pagination    |
+| `/players/export` | Downloads filtered player list as CSV       |
+| `/leagues`        | Lists all scraped leagues                   |
+| `/clubs`          | Lists clubs (optionally filtered by league) |
+| `/top10`          | Top 10 players by market value              |
+
 
 Filters supported in /players: name, position, nationality, club, league, age, age_min, age_max, limit, offset
 
-📊 Dashboard Features (Streamlit)
-Select filters (league, club, position, age range)
+## 📊 Dashboard Features (Streamlit)
+- Select filters (league, club, position, age range)
 
-View results in an interactive table
+- View results in an interactive table
 
-Download data directly as CSV
+- Download data directly as CSV
 
-Fast and responsive via API-backed queries
+- Fast and responsive via API-backed queries
 
-📁 Project Structure
-graphql
-Copy
-Edit
+## 📁 Project Structure
 .
 ├── api/                  # FastAPI logic
 │   ├── main.py
@@ -97,70 +100,40 @@ Edit
 ├── Dockerfile.dashboard
 ├── docker-compose.yml
 └── README.md
-🧠 How it works — Step-by-step
-Scraping:
 
-main_multi_relational.py scrapes clubs from each league
+## 🧠 How it works — Step-by-step
+1. Scraping:
 
-Parses player data and inserts it into a SQLite database
+- main_multi_relational.py scrapes clubs from each league
 
-Uses a relational schema with foreign keys (league → club → player)
+- Parses player data and inserts it into a SQLite database
 
-API:
+- Uses a relational schema with foreign keys (league → club → player)
 
-FastAPI reads from the same SQLite DB
+2. API:
 
-Provides powerful filtering and a /players/export CSV route
+- FastAPI reads from the same SQLite DB
 
-Returns paginated, structured data for any frontend or analysis
+- Provides powerful filtering and a /players/export CSV route
 
-Dashboard:
+- Returns paginated, structured data for any frontend or analysis
 
-Streamlit UI with filters
+3. Dashboard:
 
-Makes live requests to the FastAPI backend
+- Streamlit UI with filters
 
-Can be expanded with charts, rankings, trends, etc.
+- Makes live requests to the FastAPI backend
 
-Dockerized Stack:
+- Can be expanded with charts, rankings, trends, etc.
 
-2 containers: api (FastAPI) + dashboard (Streamlit)
+4. Dockerized Stack:
 
-Both share the same data/ volume for DB persistence
+- 2 containers: api (FastAPI) + dashboard (Streamlit)
 
-Ready to run anywhere with docker compose up
+- Both share the same data/ volume for DB persistence
 
-✅ Roadmap
- Multi-league scraping (parallelized per club)
+- Ready to run anywhere with docker compose up
 
- Relational database model (leagues, clubs, players)
-
- REST API with filters, pagination and export
-
- Streamlit dashboard for filtering and exploration
-
- Docker Compose integration for full-stack launch
-
- PostgreSQL backend (optional)
-
- Daily auto-scraping scheduler (cron or APScheduler)
-
- Historical player market value tracking & charts
-
-👤 Author
-Alex Gascón Navarro
-📍 Barcelona, Spain
-🔗 LinkedIn
-💻 GitHub
 
 📄 License
 MIT License
-
-yaml
-Copy
-Edit
-
----
-
-✅ Este README es ideal para GitHub, reclutadores, técnicos y otros usuarios.  
-¿Quieres que prepare también una portada visual o una imagen del dashboard para el repositorio?
