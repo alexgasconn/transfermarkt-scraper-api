@@ -52,3 +52,31 @@ def get_club_urls_from_league(league_url):
         clubs.append((club_name, full_url))
 
     return clubs
+
+
+
+LEAGUES = [
+    {
+        "name": "LaLiga",
+        "url": "https://www.transfermarkt.com/primera-division/startseite/wettbewerb/ES1"
+    },
+    {
+        "name": "Premier League",
+        "url": "https://www.transfermarkt.com/premier-league/startseite/wettbewerb/GB1"
+    },
+    {
+        "name": "Bundesliga",
+        "url": "https://www.transfermarkt.com/bundesliga/startseite/wettbewerb/L1"
+    }
+]
+
+def scrape_league_players(league_name, league_url, season=2023):
+    all_players = []
+    clubs = get_club_urls_from_league(league_url)
+    for club_name, club_url in clubs:
+        print(f"🔍 Scraping {club_name} ({league_name})...")
+        players = scrape_club_players(club_name, club_url, season)
+        for p in players:
+            p["league"] = league_name
+        all_players.extend(players)
+    return all_players
