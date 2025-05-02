@@ -23,6 +23,9 @@ def get_players(
     nationality: Optional[str] = Query(None),
     club: Optional[str] = Query(None),
     league: Optional[str] = Query(None),
+    age: Optional[int] = Query(None, ge=0),
+    age_min: Optional[int] = Query(None, ge=0),
+    age_max: Optional[int] = Query(None, ge=0),
     limit: int = Query(50, ge=1, le=200),
     offset: int = Query(0, ge=0),
     db: Session = Depends(get_db)
@@ -39,6 +42,13 @@ def get_players(
         query = query.join(Player.club).filter(Club.name.ilike(f"%{club}%"))
     if league:
         query = query.join(Player.club).join(Club.league).filter(League.name.ilike(f"%{league}%"))
+    if age is not None:
+        query = query.filter(Player.age == age)
+    if age_min is not None:
+        query = query.filter(Player.age >= age_min)
+    if age_max is not None:
+        query = query.filter(Player.age <= age_max)
+
 
     total = query.count()
     players = query.offset(offset).limit(limit).all()

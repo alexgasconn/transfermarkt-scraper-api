@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 
 def scrape_club_players(club_name, club_url, season=2023):
     headers = {"User-Agent": "Mozilla/5.0"}
@@ -90,13 +92,23 @@ LEAGUES = [
     }
 ]
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 def scrape_league_players(league_name, league_url, season=2023):
     all_players = []
     clubs = get_club_urls_from_league(league_url)
-    for club_name, club_url in clubs:
+
+    def scrape(club_name, club_url):
         print(f"🔍 Scraping {club_name} ({league_name})...")
         players = scrape_club_players(club_name, club_url, season)
         for p in players:
             p["league"] = league_name
-        all_players.extend(players)
+        return players
+
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        futures = [executor.submit(scrape, club_name, club_url) for club_name, club_url in clubs]
+        for future in as_completed(futures):
+            all_players.extend(future.result())
+
     return all_players
+
