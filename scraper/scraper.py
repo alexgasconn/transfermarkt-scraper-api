@@ -67,6 +67,26 @@ LEAGUES = [
     {
         "name": "Bundesliga",
         "url": "https://www.transfermarkt.com/bundesliga/startseite/wettbewerb/L1"
+    },
+    {
+        "name": "Serie A",
+        "url": "https://www.transfermarkt.com/serie-a/startseite/wettbewerb/IT1"
+    },
+    {
+        "name": "Ligue 1",
+        "url": "https://www.transfermarkt.com/ligue-1/startseite/wettbewerb/FR1"
+    },
+    {
+        "name": "Eredivisie",
+        "url": "https://www.transfermarkt.com/eredivisie/startseite/wettbewerb/NL1"
+    },
+    {
+        "name": "Primeira Liga",
+        "url": "https://www.transfermarkt.com/primeira-liga/startseite/wettbewerb/PO1"
+    },
+    {
+        "name": "Jupiler Pro League",
+        "url": "https://www.transfermarkt.com/jupiler-pro-league/startseite/wettbewerb/BE1"
     }
 ]
 
