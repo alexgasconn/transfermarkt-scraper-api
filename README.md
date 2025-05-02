@@ -1,82 +1,166 @@
+# ⚽ Transfermarkt Scraper & Dashboard
 
-# Transfermarkt Scraper API
+A full-stack football analytics pipeline that scrapes player data from [Transfermarkt](https://www.transfermarkt.com/), stores it in a relational database, serves it through a FastAPI REST API, and displays it in an interactive dashboard built with Streamlit.
 
-A Python project to scrape football player data from [Transfermarkt](https://www.transfermarkt.com/), store it in a local SQLite database, and expose the data through a FastAPI REST API.
+---
 
-## ⚽ Features
+## 🔍 What it does
 
-- Scrapes player data (name, age, nationality, position, market value) for all Eredivisie clubs  
-- Converts market values (e.g., €1.20m, €500k) to numeric format  
-- Stores data in SQLite using SQLAlchemy ORM  
-- Exposes a `/players` API endpoint with FastAPI  
-- Clean structure ready for extension, testing and deployment  
+- Scrapes all players from the top 8 European leagues (LaLiga, Premier League, Bundesliga, Serie A, Ligue 1, Eredivisie, Primeira Liga, Jupiler Pro League)
+- Converts fuzzy market values (e.g., `€1.2m`, `€500k`) to numeric format
+- Stores data in a normalized relational database (`leagues`, `clubs`, `players`)
+- Exposes a complete REST API with filters, pagination, CSV export, and ranking
+- Builds an interactive dashboard with filters and CSV export using Streamlit
+- Dockerized setup to run the full pipeline in seconds
 
-## 🛠 Setup
+---
 
-```bash
+## 🧱 Architecture Overview
+
+[Transfermarkt.com] --> [Scraper] --> [SQLite DB]
+|
++--> [FastAPI API] --> [Streamlit Dashboard]
+
+
+- **Scraper:** Parallel scraping of each club using `requests` + `BeautifulSoup`
+- **Database:** SQLAlchemy ORM with 3 relational tables (`leagues`, `clubs`, `players`)
+- **API:** Built with FastAPI, includes powerful filtering and export options
+- **Dashboard:** Built with Streamlit, uses API to display and filter players in real time
+- **Docker:** Compose setup for launching everything with a single command
+
+---
+
+## 🚀 Quick Start (with Docker)
+
+### ✅ Prerequisites
+
+- Docker & Docker Compose installed
+
+### ⚙️ Steps
+
+1. **Clone the repo:**
+
 git clone https://github.com/alexgasconn/transfermarkt-scraper-api.git
 cd transfermarkt-scraper-api
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
 
-## 📦 Run the Scraper
+2. **Build the services:**
+docker compose build
 
-This command scrapes all Eredivisie teams and stores the players in `data/players.db`:
 
-```bash
-python main.py
-```
+3. **Launch the app:**
+docker compose up
 
-## 🌐 Run the API
+4. **Visit in browser:**
+API: http://localhost:8000/docs
+Dashboard: http://localhost:8501
 
-Start the FastAPI server:
+5. **Stop everything:**
+docker compose down
 
-```bash
-uvicorn api.main:app --reload
-```
+🌐 REST API Endpoints
+Endpoint	Description
+/players	Returns filtered players with pagination
+/players/export	Downloads filtered player list as CSV
+/leagues	Lists all scraped leagues
+/clubs	Lists clubs (optionally filtered by league)
+/top10	Top 10 players by market value
 
-Then visit:
+Filters supported in /players: name, position, nationality, club, league, age, age_min, age_max, limit, offset
 
-```
-http://127.0.0.1:8000/docs
-```
+📊 Dashboard Features (Streamlit)
+Select filters (league, club, position, age range)
 
-to explore the interactive API via Swagger UI.
+View results in an interactive table
 
-## 🔍 Example Endpoint
+Download data directly as CSV
 
-- `GET /players`: Returns all players in the database
+Fast and responsive via API-backed queries
 
-## 📁 Project Structure
-
-```
+📁 Project Structure
+graphql
+Copy
+Edit
 .
-├── api/                # FastAPI routes
+├── api/                  # FastAPI logic
 │   ├── main.py
 │   └── routes.py
-├── db/                 # SQLAlchemy models and session
+├── db/                   # SQLAlchemy models and session
 │   ├── database.py
 │   └── models.py
-├── scraper/            # Scraping logic and utilities
+├── scraper/              # Scraping logic and utilities
 │   ├── scraper.py
 │   └── utils.py
-├── data/               # Contains players.db (SQLite)
-├── main.py             # Runs scraper and saves data
+├── dashboard.py          # Streamlit dashboard app
+├── main_multi_relational.py  # Entry point for scraping & DB insertion
 ├── requirements.txt
+├── Dockerfile.api
+├── Dockerfile.dashboard
+├── docker-compose.yml
 └── README.md
-```
+🧠 How it works — Step-by-step
+Scraping:
 
-## ✅ To Do
+main_multi_relational.py scrapes clubs from each league
 
-- Add filters by club, position, nationality  
-- Add top 10 by market value endpoint  
-- Dockerize the full pipeline   (DOING NOW)
-- Add CI with GitHub Actions  
-- Optional: deploy to cloud with Terraform / Ansible  
+Parses player data and inserts it into a SQLite database
 
+Uses a relational schema with foreign keys (league → club → player)
 
-## 📄 License
+API:
 
-MIT
+FastAPI reads from the same SQLite DB
+
+Provides powerful filtering and a /players/export CSV route
+
+Returns paginated, structured data for any frontend or analysis
+
+Dashboard:
+
+Streamlit UI with filters
+
+Makes live requests to the FastAPI backend
+
+Can be expanded with charts, rankings, trends, etc.
+
+Dockerized Stack:
+
+2 containers: api (FastAPI) + dashboard (Streamlit)
+
+Both share the same data/ volume for DB persistence
+
+Ready to run anywhere with docker compose up
+
+✅ Roadmap
+ Multi-league scraping (parallelized per club)
+
+ Relational database model (leagues, clubs, players)
+
+ REST API with filters, pagination and export
+
+ Streamlit dashboard for filtering and exploration
+
+ Docker Compose integration for full-stack launch
+
+ PostgreSQL backend (optional)
+
+ Daily auto-scraping scheduler (cron or APScheduler)
+
+ Historical player market value tracking & charts
+
+👤 Author
+Alex Gascón Navarro
+📍 Barcelona, Spain
+🔗 LinkedIn
+💻 GitHub
+
+📄 License
+MIT License
+
+yaml
+Copy
+Edit
+
+---
+
+✅ Este README es ideal para GitHub, reclutadores, técnicos y otros usuarios.  
+¿Quieres que prepare también una portada visual o una imagen del dashboard para el repositorio?
