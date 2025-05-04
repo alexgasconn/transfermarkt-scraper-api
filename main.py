@@ -35,7 +35,8 @@ for league_info in LEAGUES:
             name=player_row["name"],
             age=int(player_row["age"]) if player_row["age"].isdigit() else None,
             nationality=player_row["nationality"],
-            position=player_row["position"],
+            position_detail=player_row["position_detail"],
+            position_category=player_row["position_category"],
             market_value=player_row["market_value"],
             market_value_eur=parse_market_value(player_row["market_value"]),
             club=club

@@ -28,9 +28,11 @@ class Player(Base):
     name = Column(String)
     age = Column(Integer)
     nationality = Column(String)
-    position = Column(String)
     market_value = Column(String)
     market_value_eur = Column(Integer)
     club_id = Column(Integer, ForeignKey("clubs.id"))
+    position_category = Column(String)
+    position_detail = Column(String)
+
 
     club = relationship("Club", back_populates="players")

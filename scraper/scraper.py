@@ -22,14 +22,19 @@ def scrape_club_players(club_name, club_url, season=2023):
             market_value = row.find_all("td")[-1].text.strip()
             nationality = row.find("img", class_="flaggenrahmen")["title"]
             age = row.find_all("td")[5].text.strip()
+            position_detail = row.find_all("td")[4].text.strip()
+            position_category = map_position_category(position_detail)
+
             players.append({
                 "club": club_name,
                 "name": name,
                 "age": age,
-                "position": position,
                 "nationality": nationality,
+                "position_detail": position_detail,
+                "position_category": position_category,
                 "market_value": market_value
             })
+
         except Exception:
             continue
 
@@ -112,3 +117,16 @@ def scrape_league_players(league_name, league_url, season=2023):
 
     return all_players
 
+
+def map_position_category(detail: str) -> str:
+    detail = detail.lower()
+    if "keeper" in detail:
+        return "Goalkeeper"
+    elif "back" in detail or "defender" in detail or "centre-back" in detail:
+        return "Defender"
+    elif "midfield" in detail:
+        return "Midfield"
+    elif "winger" in detail or "forward" in detail or "striker" in detail:
+        return "Forward"
+    else:
+        return "Other"
